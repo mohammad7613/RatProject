@@ -1,0 +1,1 @@
+Rat data are preprocessed by EEGLAB.(without rereferencing.  BP filter(1-70), Notch filter, ASR for denoising are applied)
