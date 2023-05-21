@@ -1,38 +1,34 @@
 clc;
 clear;
 close all;
-eve=20;
 
+load('presessionData_v2_normalizedLFPOverTime_EpochedData.mat')
 
-d = 'C:\Users\Fazeli\Desktop\Monkey\mice\mice-main\Recording\AssociationOdorAndAudio\011110\AuditoryOdor\Session2\MatData\github\Data\';
+if ~exist(fullfile(pwd,'PAC'), 'dir')
+    mkdir(fullfile(pwd,'PAC'));
+end
 
-mat_files = dir(fullfile(d,strcat('**/Epoch_event_',int2str(eve),'.mat')));
+A=Epoch.data;
+t=Epoch.events(1).trigger_index;
+s=Epoch.events(2).trigger_index;
+target = A (:,t,:);
+target = permute(target,[1 3 2]);
+standard = A (:,s,:);
+standard = permute(standard,[1 3 2]);
 
-folder_paths = {'PAC30-34\', 'PAC38-42\', 'PAC46-50\', 'PAC30-50\'};
+event = standard;
+eve='standard';
 
-%full_path = fullfile(folder_paths{i}, file_names{i});
+%0.2 sec pre and 1 sec post stimulus.
+% fs = 1000;
+event_mean_bs = mean(event(:,1:200,:),2);
+event_demean = event - event_mean_bs;
+erp = mean(event_demean,3);
 
-for i = 1:length(mat_files)
+% Define window size and overlap
+windowSize = 200; %fs=2000, so 2000 means 1sec
+overlap = 100;
 
-    if ~exist(fullfile(mat_files(i).folder,'PAC'), 'dir')
-        mkdir(fullfile(mat_files(i).folder,'PAC'));
-        %mkdir(folder_paths{i});
-
-    end
-
-    eeg(i) = load(fullfile(mat_files(i).folder, mat_files(i).name));
-    event=eeg(i).data;
-    %event=event(:,:,1:15);
-    %trialnumber = size(event,3);
-
-    %%%fs=2000;
-    event_mean_bs = mean(event(:,1:2000,:),2);
-    event_demean = event - event_mean_bs;
-    erp = mean(event_demean,3);
-
-    % Define window size and overlap
-    windowSize = 1000; %fs=2000, so 2000 means 1sec
-    overlap = 500;
 
 
 for c = 1:3 % c : channels
@@ -43,32 +39,32 @@ for c = 1:3 % c : channels
  CI_1 =  nan(numWindows,1);
  CI_2 =  nan(numWindows,1);
  Fs = 1000;
-% 
-%  % PAC on the whole time
-%  high = [30 50]; % set the required amplitude frequency range
-%  low = [5 8]; % set the required phase frequency range
-%  highfreq = high(1):2:high(2);
-%  amp_length = length(highfreq);
-%  lowfreq = low(1):1:low(2);
-%  phase_length = length(lowfreq);
-%  tf_MVL_all = zeros(amp_length,phase_length);
-% 
-%  for k = 1:phase_length
-%      for j = 1:amp_length
-%          l_freq = lowfreq(k);
-%          h_freq = highfreq(j);
-%          [tf_MVL_all(j,k)] = tfMVL(data, h_freq, l_freq, Fs);
-%      end
-%  end
-%     
-%      plot_comodulogram(tf_MVL_all,high,low) %plot comodulogram
-%      set(gcf,'Position',get(0,'Screensize'));
-%     caxis([0, 1]); 
-%     colorbar;
-%     title(strcat('event',int2str(eve),'__CH',int2str(c)));
-%     saveas(gcf,strcat(mat_files(i).folder,'\PAC\event',int2str(eve),'_CH',int2str(c),'.png'))  
-%     
- 
+
+ % PAC on the whole time
+ high = [30 50]; % set the required amplitude frequency range
+ low = [5 8]; % set the required phase frequency range
+ highfreq = high(1):2:high(2);
+ amp_length = length(highfreq);
+ lowfreq = low(1):1:low(2);
+ phase_length = length(lowfreq);
+ tf_MVL_all = zeros(amp_length,phase_length);
+
+ for k = 1:phase_length
+     for j = 1:amp_length
+         l_freq = lowfreq(k);
+         h_freq = highfreq(j);
+         [tf_MVL_all(j,k)] = tfMVL(data, h_freq, l_freq, Fs);
+     end
+ end
+    
+     plot_comodulogram(tf_MVL_all,high,low) %plot comodulogram
+     set(gcf,'Position',get(0,'Screensize'));
+    caxis([0, 1]); 
+    colorbar;
+    title(strcat('event:',eve,'__CH',int2str(c)));
+    saveas(gcf,strcat(pwd,'\PAC\event_',eve,'_CH',int2str(c),'.png'))  
+    
+  % PAC on the time window
  for cnt = 1:numWindows
     idx = (cnt-1)*overlap+1;
     x = data(idx:idx+windowSize-1);
@@ -96,10 +92,10 @@ for c = 1:3 % c : channels
 %     pacfreq = [low_pacf, high_pacf];
     plot_comodulogram(tf_MVL_all,high,low) %plot comodulogram
     set(gcf,'Position',get(0,'Screensize'));
-    caxis([0, 0.5]); 
+    caxis([0, 1]); 
     colorbar;
-    title(strcat('event',int2str(eve),'__CH',int2str(c),'_step:',int2str(cnt)));
-    saveas(gcf,strcat(mat_files(i).folder,'\PAC\event',int2str(eve),'_CH',int2str(c),'step_',int2str(cnt),'.png'))  
+    title(strcat('event:',eve,'__CH',int2str(c),'_step:',int2str(cnt)));
+    saveas(gcf,strcat(pwd,'\PAC\event_',eve,'_CH',int2str(c),'step_',int2str(cnt),'.png'))  
     tf = tf_MVL_all(1:5,:);     %30-50 * 4-8 to 30-34 * 4*8
     tf_MVL_mean = mean(mean(tf)); 
     pac(cnt)=tf_MVL_mean;
@@ -123,13 +119,12 @@ for c = 1:3 % c : channels
     fill(t2, inBetween, 'b','FaceAlpha',0.3);
     hold on;
     %save(strcat('pac_CH',int2str(c),'std'),'pac')
-    %xticklabels({'-200to-100' '-100to100' '0to200' '100to300' '200to400' '300to500' '400to600' '500to700'})
+    xticklabels({'-200to-100' '-100to100' '0to200' '100to300' '200to400' '300to500' '400to600' '500to700' '600to800' '700to900' '800to1000'})
     
     plot(t,pac);
     set(gcf,'Position',get(0,'Screensize'));
-    title(strcat('dynamic_event',int2str(eve),'__CH',int2str(c)));
-    saveas(gcf,strcat(mat_files(i).folder,'\PAC\dynamic_event',int2str(eve),'_CH',int2str(c),'.png'))
+    title(strcat('dynamic_event:',eve,'__CH',int2str(c)));
+    saveas(gcf,strcat(pwd,'\PAC\dynamic_event_',eve,'_CH',int2str(c),'.png'))
     close all;
 end
 
-end
