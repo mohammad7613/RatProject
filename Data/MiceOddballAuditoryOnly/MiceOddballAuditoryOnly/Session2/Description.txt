@@ -1,0 +1,11 @@
+Oddball task 100 trials 
+
+Target and Standard 
+
+Run with probability distibution at each trial 0.2 for target and 0.8 for standard
+
+There are some trial for target which has abnormal duration.
+
+200 ms duration and time interval is 2s.
+
+Tag before and after each trial is 10 and 20 for target and standard respectively.

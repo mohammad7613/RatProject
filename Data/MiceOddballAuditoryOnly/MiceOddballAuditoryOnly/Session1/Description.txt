@@ -1,0 +1,11 @@
+Oddball task 100 trials 
+
+Target and Standard 
+
+Run with the original setting of the cavanagh
+
+There are some trial for target which has abnormal duration.
+
+200 ms duration and time interval is 2s.
+
+Tag before and after each trial is 10 and 20 for target and standard respectively.
