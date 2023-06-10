@@ -1,0 +1,5 @@
+Channels:
+
+1- Hippocampus
+2- Olfactory Tubercle
+3- Middle Frontal Cortex

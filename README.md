@@ -24,5 +24,5 @@ How to use it:
     - The resulted set file is going to be saved in Mat Folder along with raw data sessionData.mat
 - [x] Run PAC and ERP on Epoched and normalized Data 
 After Epoched data, we can use ERP or PAC sepratly, all codesare located in "/codes/...".
-In PAC three type diagram are been ploted (whole time, windowing and dynamic). The frequency for whole time is set to 5-8 and 30-50. Although, this range is reduced to 30-34 * 4-8 for dynamic plots. 
+In PAC three type diagram are ploted (whole time, windowing and dynamic). The frequency for whole time is set to 5-8 and 30-50. Although, this range is reduced to 30-34 * 4-8 for dynamic plots. 
 The results are saved in a subfolder of the data folder named PAC or ERP
