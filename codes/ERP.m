@@ -2,7 +2,7 @@ clc;
 clear;
 close all;
 
-load('presessionData_v2_normalizedLFPOverTime_EpochedData.mat')
+load('presessionData_v1_normalizedLFPOverTime_EpochedData.mat')
 
 if ~exist(fullfile(pwd,'ERP'), 'dir')
     mkdir(fullfile(pwd,'ERP'));
@@ -16,14 +16,14 @@ target = permute(target,[1 3 2]);
 standard = A (:,s,:);
 standard = permute(standard,[1 3 2]);
 
-event = standard;
+event = standard; %standard or target
 eve='standard';
 
 %0.2 sec pre and 1 sec post stimulus.
-% fs = 1000;
+% fs = 2000;
 
 trialnumber = size(event,3);
-event_mean_bs = mean(event(:,1:200,:),2);
+event_mean_bs = mean(event(:,1:400,:),2);
 event_demean = event - event_mean_bs;
 S30 = mean(event_demean,3);
 std30 = std(event_demean,1,3)/sqrt(trialnumber);
@@ -33,7 +33,7 @@ CI_1 = S30 + ts(1) * std30;
 CI_2 = S30 + ts(2) * std30;
 
 
-t=-200:1000;
+t=-200:0.5:1000;
 for c = 1:3
     
     % confidence interval plot

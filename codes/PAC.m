@@ -2,7 +2,7 @@ clc;
 clear;
 close all;
 
-load('presessionData_v2_normalizedLFPOverTime_EpochedData.mat')
+load('presessionData_v1_normalizedLFPOverTime_EpochedData.mat')
 
 if ~exist(fullfile(pwd,'PAC'), 'dir')
     mkdir(fullfile(pwd,'PAC'));
@@ -20,14 +20,14 @@ event = standard;
 eve='standard';
 
 %0.2 sec pre and 1 sec post stimulus.
-% fs = 1000;
-event_mean_bs = mean(event(:,1:200,:),2);
+% fs = 2000;
+event_mean_bs = mean(event(:,1:400,:),2);
 event_demean = event - event_mean_bs;
 erp = mean(event_demean,3);
 
 % Define window size and overlap
-windowSize = 200; %fs=2000, so 2000 means 1sec
-overlap = 100;
+windowSize = 400; %fs=2000, so 2000 means 1sec
+overlap = 200;
 
 
 
@@ -38,7 +38,7 @@ for c = 1:3 % c : channels
  pac =  nan(numWindows,1); % total time = 1 sec(200ms window with 100ms overlap)
  CI_1 =  nan(numWindows,1);
  CI_2 =  nan(numWindows,1);
- Fs = 1000;
+ Fs = 2000;
 
  % PAC on the whole time
  high = [30 50]; % set the required amplitude frequency range
@@ -119,7 +119,7 @@ for c = 1:3 % c : channels
     fill(t2, inBetween, 'b','FaceAlpha',0.3);
     hold on;
     %save(strcat('pac_CH',int2str(c),'std'),'pac')
-    xticklabels({'-200to-100' '-100to100' '0to200' '100to300' '200to400' '300to500' '400to600' '500to700' '600to800' '700to900' '800to1000'})
+    xticklabels({'-200to0' '-100to100' '0to200' '100to300' '200to400' '300to500' '400to600' '500to700' '600to800' '700to900' '800to1000'})
     
     plot(t,pac);
     set(gcf,'Position',get(0,'Screensize'));

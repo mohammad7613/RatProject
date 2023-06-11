@@ -2,7 +2,7 @@ clc;
 clear;
 close all;
 % Load CleanData
-version = 2;
+version = 1;
 file_name_set = ['presessionData_v',num2str(version),'.set'];
 path = pwd;
 EEG = pop_loadset(file_name_set,path);
