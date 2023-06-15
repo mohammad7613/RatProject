@@ -23,6 +23,10 @@ How to use it:
     - Run finally select a name and run save section.
     - The resulted set file is going to be saved in Mat Folder along with raw data sessionData.mat
 - [x] Run PAC and ERP on Epoched and normalized Data 
-After Epoched data, we can use ERP or PAC sepratly, all codesare located in "/codes/...".
-In PAC three type diagram are ploted (whole time, windowing and dynamic). The frequency for whole time is set to 5-8 and 30-50. Although, this range is reduced to 30-34 * 4-8 for dynamic plots. 
+After Epoched data, we can use ERP or PAC separately, all codes are located in "/codes/...".
+In PAC three types of diagrams are plotted (whole time, windowing and dynamic). The frequency for the whole time is set to 5-8 and 30-50. Although, this range is reduced to 30-34 * 4-8 for dynamic plots. 
 The results are saved in a subfolder of the data folder named PAC or ERP
+- [x] Run Mutual PAC on Epoched and normalized Data 
+After Epoched data, we can use Mutual PAC, all codes are located in "/codes/..."  (PAC functions such as "tfMVL.m" and "tfMVL2.m" are located in "/codes/PAC_functions".)
+In PAC three types of diagrams are plotted (whole time, windowing and dynamic). The frequency for the whole time is set to 5-8 and 30-50. Although, this range is reduced to 30-34 * 4-8 for dynamic plots. 
+The results are calculated for all combinations of channels and saved in a subfolder of the data folder named MPAC.
