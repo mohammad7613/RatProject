@@ -1,0 +1,18 @@
+
+Experiment setup:
+
+Oddball task 100 trials
+
+Target and Standard
+
+Run with probability distibution at each trial 0.2 for target and 0.8 for standard
+
+There are some trial for target which has abnormal duration.
+
+200 ms duration and time interval is 2s.
+
+Tag before and after each trial is 10 and 20 for target and standard respectively.
+
+
+You can see the visualization the pipeline in the following link https://www.tldraw.com/s/v2_c_a8FbVukOI7mhYFD1PWXUZ?viewport=-29%2C-35%2C1522%2C738page=page%3AHaU1BtgxyzGInHAlGNcM1
+
