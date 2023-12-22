@@ -1,6 +1,6 @@
 function plot_TEntropy_allConfigs(Sigs, configs, sig_Labels, savePath)
     
-    addpath('Codes/Functions')
+    addpath('../Connectivity_functions')
 
     n = size(Sigs.target, 3);
     

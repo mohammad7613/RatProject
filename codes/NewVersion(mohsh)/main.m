@@ -9,7 +9,7 @@ addpath('Visualization')
 
 clc;
 
-[data, fs] = load_data('../../../', '1', '2080', '2');
+[data, fs] = load_data('../..', '1', '2080', '2');
 
 %% Preprocess
 clc; close all;
@@ -26,7 +26,7 @@ prep_data = preprocess(tstep, data.channelData, data.digitalByte,...
 
 clc; close all;
 
-directoryPath = strcat('Results/Transfer_Entropy',...
+directoryPath = strcat('../../Results/Transfer_Entropy',...
                        '\sessionDataoddball', '1', '_', ...
                        '2080', '_', '2'); 
 if exist(directoryPath, 'dir') ~= 7
@@ -43,7 +43,7 @@ configs = struct(...
 
 sig_Labels = ["mPFC", "Hippo"];
 
-[T_target, T_std] = calc_Entropy_inTrial(prep_data, configs, 1, 2);
+[T_target, T_std] = calc_Entropy_inTrial(prep_data, configs, 2, 1);
 plot_Entropy_inTrial(T_std, T_target, sig_Labels, directoryPath, configs)
 
 %%
