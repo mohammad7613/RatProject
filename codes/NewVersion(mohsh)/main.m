@@ -1,15 +1,15 @@
 clc; close all; clear;
 
-addpath('Codes/PreProcessing')
-addpath('Codes/Functions')
-addpath('Codes/Visualization')
+addpath('PreProcess')
+addpath('Connectivity_functions')
+addpath('Visualization')
 
 
 %% Data 1:
 
 clc;
 
-[data, fs] = load_data(pwd, '1', '2080', '2');
+[data, fs] = load_data('../../../', '1', '2080', '2');
 
 %% Preprocess
 clc; close all;
