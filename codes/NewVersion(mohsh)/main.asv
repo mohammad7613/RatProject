@@ -8,9 +8,9 @@ addpath('Visualization')
 %% Data 1:
 
 clc;
-session_no = '4';
-oddball_ratio = '4060';
-exp_no = '3';
+session_no = '2';
+oddball_ratio = '2080';
+exp_no = '2';
 [data, fs] = load_data('../..', session_no, oddball_ratio, exp_no);
 
 %% Preprocess
