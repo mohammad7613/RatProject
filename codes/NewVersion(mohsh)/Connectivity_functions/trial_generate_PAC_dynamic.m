@@ -1,12 +1,8 @@
-function results = generate_PAC_dynamic(prep_data, n, ch1, ch2, configs,...
-    fig_title, alpha, is_normalizing, is_saving, save_path, window_type,...
-    epoch_t_start, range)
+function results = trial_generate_PAC_dynamic(data, n, s, configs, fig_title, alpha, is_saving, save_path)
     
-    [PAC_mat_std, PAC_target, s] = calc_PAC_dyn_stdT(prep_data, configs, n,...
-                                    ch1, ch2, is_normalizing, window_type);
+    [PAC_mat_std, PAC_target] = trial_population_pac_dyna(data, n);
     
-    plot_t_std_conf_int(PAC_mat_std, PAC_target, s, configs.fs, range,...
-                        window_type, epoch_t_start)
+    plot_t_std_conf_int(zscore(PAC_mat_std,0,2), zscore(PAC_target,0,2), s, configs.fs)
     title(fig_title);
     
     if(is_saving)
@@ -17,7 +13,7 @@ function results = generate_PAC_dynamic(prep_data, n, ch1, ch2, configs,...
         saveas(gcf, pngFilePath); 
     end
     
-    plot_pval_std_t(PAC_mat_std, PAC_target, s, configs.fs, alpha, window_type, epoch_t_start)
+    plot_pval_std_t(PAC_mat_std, PAC_target, s, configs.fs, alpha)
     title(fig_title);
     
     if(is_saving)
