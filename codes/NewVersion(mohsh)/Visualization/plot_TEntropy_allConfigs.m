@@ -1,6 +1,6 @@
-function plot_TEntropy_allConfigs(Sigs, configs, sig_Labels, savePath)
+function plot_TEntropy_allConfigs(Sigs, configs, sig_Labels, savePath, is_saving)
     
-    addpath('../Connectivity_functions')
+    addpath('Codes/Functions')
 
     n = size(Sigs.target, 3);
     
@@ -9,7 +9,7 @@ function plot_TEntropy_allConfigs(Sigs, configs, sig_Labels, savePath)
             
             sig_Label = [sig_Labels(i), sig_Labels(j)];
             [T_target, T_std] = calc_Entropy_inTrial(Sigs, configs, i, j);
-            plot_Entropy_inTrial(T_std, T_target, sig_Label, savePath, configs)
+            plot_Entropy_inTrial(T_std, T_target, sig_Label, savePath, configs, is_saving)
             
             % Close the figure to avoid overlapping plots
             close(gcf);

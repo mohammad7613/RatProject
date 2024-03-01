@@ -1,18 +1,19 @@
-function plot_Entropy_inTrial(T_std, T_target, sig_Labels, savePath, configs)
+function plot_Entropy_inTrial(T_std, T_target, title, savePath, configs, is_saving)
 
-    time = -configs.sig_len(1)*1000:configs.step*1000:(configs.sig_len(2)-configs.interval)*1000;
+    time = (-configs.sig_len(1)+configs.interval/2)*1000:configs.step*1000:(configs.sig_len(2)-configs.interval/2)*1000;
     
-    plot(time, T_std, 'linewidth', 2); hold on;
-    plot(time, T_target, 'linewidth', 2);
+    plot(time, T_target, 'linewidth', 2); hold on;
+    plot(time, T_std, 'linewidth', 2);
     xline(0, '--', 'linewidth', 2)
     
-    title(strcat('Transfer Entropy : ', sig_Labels(1), ' to ', ' ', sig_Labels(2)))
-    legend('Standard', 'Target', 'stimulus onset')
+    legend('Target', 'Standard', 'stimulus onset')
     xlabel('time')
     ylabel('Transfer Entropy')
             
     % Save the figure
-    saveas(gcf, fullfile(savePath, ...
-           strcat('TransferEntropy_', sig_Labels(1), '_to_', sig_Labels(2), '.png')));
-
+    if is_saving
+        saveas(gcf, fullfile(savePath, ...
+               strcat('TransferEntropy_', title, '.png')));
+    end
+        
 end
